@@ -22,7 +22,7 @@ jobs:
           node ace generate:key
         
       - name: Run tests
-        run: node ace test
+        run: npm run test
         
       - uses: codecov/codecov-action@v3
         with:

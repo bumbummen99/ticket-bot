@@ -8,7 +8,7 @@
     "start": "node server.js",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write .",
-    "test": "c8 node ace test"
+    "test": "c8 --reporter=lcov node ace test"
   },
   "eslintConfig": {
     "extends": [

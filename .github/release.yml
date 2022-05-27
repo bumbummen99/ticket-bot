@@ -6,7 +6,7 @@ changelog:
   categories:
     - title: Added
       labels:
-        - enhancement
+        - Enhancement
     - title: Deprecated
       labels:
         - Deprecated

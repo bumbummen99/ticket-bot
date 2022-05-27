@@ -15,9 +15,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Configure Adonis
+        run: |
+          cp .env.example .env
+          node ace generate:key
         
       - name: Run tests
-        run: node ace test
+        run: npm run test
         
       - uses: codecov/codecov-action@v3
         with:

@@ -7,7 +7,7 @@ const databaseConfig: DatabaseConfig = {
 
   // List of available connections
   connections: {
-    pg: {
+    mysql: {
       client: 'mysql2',
       connection: {
         host: Env.get('MySQL_HOST'),

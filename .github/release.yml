@@ -6,19 +6,19 @@ changelog:
   categories:
     - title: Added
       labels:
-        - enhancement
+        - Enhancement
     - title: Deprecated
       labels:
-        - deprecated
+        - Deprecated
     - title: Removed
       labels:
-        - removed
+        - Removed
     - title: Fixed
       labels:
-        - bug
+        - Bug
     - title: Security
       labels:
-        - security
+        - Security
     - title: Changed
       labels:
         - "*"

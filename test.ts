@@ -18,6 +18,7 @@ import 'reflect-metadata'
 import sourceMapSupport from 'source-map-support'
 import { Ignitor } from '@adonisjs/core/build/standalone'
 import { configure, processCliArgs, run, RunnerHooksHandler } from '@japa/runner'
+import { assert } from '@japa/assert'
 
 sourceMapSupport.install({ handleUncaughtExceptions: false })
 
@@ -32,6 +33,10 @@ kernel
     configure({
       ...kernel.application.rcFile.tests,
       ...processCliArgs(process.argv.slice(2)),
+      ...{
+        files: ['tests/**/*.spec.js'],
+        plugins: [assert()]
+      },
       ...config,
       ...{
         importer: (filePath) => import(filePath),

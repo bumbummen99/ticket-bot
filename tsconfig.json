@@ -13,6 +13,7 @@
       "Database/*": ["./database/*"]
     },
     "types": [
+      "@adonisjs/lucid",
       "@adonisjs/core",
       "@adonisjs/repl",
       "@adonisjs/session",

@@ -10,11 +10,11 @@ const databaseConfig: DatabaseConfig = {
     mysql: {
       client: 'mysql2',
       connection: {
-        host: Env.get('MySQL_HOST'),
-        port: Env.get('MySQL_PORT'),
-        user: Env.get('MySQL_USER'),
-        password: Env.get('MySQL_PASSWORD', ''),
-        database: Env.get('MySQL_DB_NAME'),
+        host: Env.get('DB_HOST'),
+        port: Env.get('DB_PORT'),
+        user: Env.get('DB_USER'),
+        password: Env.get('DB_PASSWORD', ''),
+        database: Env.get('DB_DB_NAME'),
       },
       migrations: {
         naturalSort: true,

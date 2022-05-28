@@ -14,6 +14,7 @@
   },
   "preloads": ["./start/routes", "./start/kernel"],
   "providers": [
+    "./providers/DiscordBotProvider",
     "./providers/AppProvider",
     "@adonisjs/core",
     "@adonisjs/session",
@@ -36,6 +37,11 @@
       {
         "name": "functional",
         "files": ["tests/functional/**/*.spec(.ts|.js)"],
+        "timeout": 60000
+      },
+      {
+        "name": "unit",
+        "files": ["tests/unit/**/*.spec(.ts|.js)"],
         "timeout": 60000
       }
     ]

@@ -30,5 +30,5 @@ export default Env.rules({
   DB_PORT: Env.schema.number(),
   DB_USER: Env.schema.string(),
   DB_PASSWORD: Env.schema.string.optional(),
-  DB_DB_NAME: Env.schema.string(),
+  DB_NAME: Env.schema.string(),
 })

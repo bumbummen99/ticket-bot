@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  adonis:
+    container_name: adonis
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: dependencies
+    ports:
+      - ${PORT}:${PORT}
+      - 9229:9229
+      - 8080:8080
+    env_file:
+      - .env
+    volumes:
+      - ./:/home/node/app
+    command: dumb-init node ace serve --watch --encore-args="--host ${HOST} --port 8080"
+    networks:
+      - adonis
+
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - 'mysql:/var/lib/mysql'
+    networks:
+      - adonis
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+      retries: 3
+      timeout: 5s
+
+networks:
+  adonis:
+    driver: bridge
+
+volumes:
+  mysql:
+    driver: local

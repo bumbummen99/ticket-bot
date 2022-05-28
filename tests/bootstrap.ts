@@ -65,5 +65,7 @@ export const runnerHooks: Required<Pick<Config, 'setup' | 'teardown'>> = {
 export const configureSuite: Config['configureSuite'] = (suite) => {
   if (suite.name === 'functional') {
     suite.setup(() => TestUtils.httpServer().start())
+  } else if (suite.name === 'unit') {
+    // Boot the app?
   }
 }

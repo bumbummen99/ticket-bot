@@ -37,7 +37,9 @@ export default class Discord {
                 resolve()
             })
 
-            this.bot.once('error', reject)
+            if (Env.get('NODE_ENV') !== 'test') {
+                this.bot.once('error', reject)
+            }
         })
 
         /* Whenever the bot joins a guild */

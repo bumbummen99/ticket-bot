@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders'
-import { REST } from '@discordjs/rest'
+import { REST, RESTOptions } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
 import Env from '@ioc:Adonis/Core/Env'
 import Logger from '@ioc:Adonis/Core/Logger'
@@ -66,7 +66,15 @@ export default class Discord {
         ].map(command => command.toJSON());
 
         /* Initialize discord.js REST client */
-        const rest = new REST({ version: '9' }).setToken(Env.get('DISCORD_BOT_TOKEN'));
+        const options: Partial<RESTOptions> = {
+            version: '9'
+        }
+
+        if (Env.get('DISCORD_API')) {
+            options.api = Env.get('DISCORD_API')
+        }
+
+        const rest = new REST(options).setToken(Env.get('DISCORD_BOT_TOKEN'));
         
         /* Publish the slash commands to the guild */
         await rest.put(Routes.applicationGuildCommands(this.bot.user.id, guildId), { body: commands })

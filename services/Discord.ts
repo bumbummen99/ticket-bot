@@ -3,16 +3,26 @@ import { REST } from '@discordjs/builders'
 import { Routes } from 'discord-api-types/v9'
 import Env from '@ioc:Adonis/Core/Env'
 import Logger from '@ioc:Adonis/Core/Logger'
-import { Client, Guild, Intents } from 'discord.js'
+import { Client, ClientOptions, Guild, Intents } from 'discord.js'
 
 export default class Discord {
     bot: Client
 
     constructor() {
-        /* Initialize the DiscordJS client */
-        this.bot = new Client({
+        /* Configure DiscordJS */
+        const options: ClientOptions = {
             intents: [Intents.FLAGS.GUILD_MEMBERS]
-        })
+        }
+
+        /* Overwrite API endpoint if set */
+        if (Env.get('DISCORD_API')) {
+            options.http = {
+                api: Env.get('DISCORD_API')
+            }
+        }
+
+        /* Initialize the DiscordJS client */
+        this.bot = new Client(options)
     }
     
     /**

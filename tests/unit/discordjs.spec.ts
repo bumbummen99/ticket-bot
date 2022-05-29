@@ -2,7 +2,7 @@ import { test } from '@japa/runner'
 import { Assert } from '@japa/assert'
 import DiscordIoC from '@ioc:TicketBot/Discord'
 import Discord from 'services/Discord'
-import { MockDiscordServer } from 'discord-mock-server'
+import { MockDiscordServer } from 'mock-discord-server'
 
 test.group('DiscordJS integration tests', group => {
     let server: MockDiscordServer

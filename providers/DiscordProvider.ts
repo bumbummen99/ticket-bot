@@ -18,6 +18,11 @@ export default class DiscordProvider {
 
     /* Boot the DiscordJS Service */
     await discord.boot()
+
+    /* Register slash commands to all guilds we are joined to */
+    for (const [id, guild] of discord.bot.guilds.cache) {
+      await discord.registerSlashCommands(guild.id)
+    }
   }
 
   public async ready() {

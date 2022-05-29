@@ -3,17 +3,22 @@ import { REST } from '@discordjs/builders'
 import { Routes } from 'discord-api-types/v9'
 import Env from '@ioc:Adonis/Core/Env'
 import Logger from '@ioc:Adonis/Core/Logger'
-import { Client, Intents } from 'discord.js'
+import { Client, Guild, Intents } from 'discord.js'
 
 export default class Discord {
     bot: Client
 
     constructor() {
+        /* Initialize the DiscordJS client */
         this.bot = new Client({
             intents: [Intents.FLAGS.GUILD_MEMBERS]
         })
     }
     
+    /**
+     * This method simply boots the client by logging it in and 
+     * registering listeners.
+     */
     async boot(): Promise<void>
     {
         /* Login with the configured token */
@@ -34,8 +39,18 @@ export default class Discord {
 
             this.bot.once('error', reject)
         })
+
+        /* Whenever the bot joins a guild */
+        this.bot.on('guildCreate', async (guild: Guild) => {
+            await this.registerSlashCommands(guild.id)
+        })
     }
 
+    /**
+     * This method registers the bot's slash commands to the given guild.
+     * 
+     * @param guildId The snowflake/id of the guild to register our commands to
+     */
     async registerSlashCommands(guildId: string): Promise<void> {
         /* Make sure the bot is ready and logged in first */
         if (! this.bot.isReady()) {

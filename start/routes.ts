@@ -19,7 +19,17 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import { Client } from 'discord.js'
 
 Route.get('/', async ({ view }) => {
-  return view.render('welcome')
+  const bot: Client = await import('@ioc:TicketBot/DiscordJS')
+  const state: {
+    [key: string]: any 
+  } = {}
+
+  if (bot.user) {
+    state.joinUrl = `https://discord.com/api/oauth2/authorize?client_id=${bot.user.id}&permissions=0&scope=bot%20applications.commands`
+  }
+
+  return view.render('welcome', state)
 })

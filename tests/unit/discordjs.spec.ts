@@ -19,12 +19,13 @@ test.group('DiscordJS integration tests', group => {
         await server.start()
     })
 
+    group.teardown(async () => {
+        await server.stop()
+    })
+
     test('It initialized DiscordJS', async ({ assert }: {
         assert: Assert
     }) => {
         assert.instanceOf(DiscordIoC, Discord)
     })
 })
-
-
-  

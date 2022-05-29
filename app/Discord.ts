@@ -34,8 +34,12 @@ export default class Discord {
      */
     async boot(): Promise<void>
     {
-        /* Login with the configured token */
-        await this.bot.login(Env.get('DISCORD_BOT_TOKEN'))
+        try {
+            /* Login with the configured token */
+            await this.bot.login(Env.get('DISCORD_BOT_TOKEN'))
+        } catch (e) {
+            console.error(JSON.stringify(e))
+        }
 
         /* Whenever the bot joins a guild */
         this.bot.on('guildCreate', async (guild: Guild) => {

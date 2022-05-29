@@ -21,24 +21,11 @@ export default class Discord {
      */
     async boot(): Promise<void>
     {
-        /* Login with the configured token */
-        await this.bot.login(Env.get('DISCORD_BOT_TOKEN'))
-
-        /* Wait for ready or error */
-        await new Promise<void>((resolve, reject) => {           
-            this.bot.once('ready', () => {
-                /* Notify once bot is ready */
-                Logger.info(`Discord.js is ready!`)
-
-                /* Remove error listener */
-                this.bot.off('error', reject)
-
-                /* Proceed execution */
-                resolve()
-            })
-
-            this.bot.once('error', reject)
-        })
+        /* Only login if the token is configured (i.e. not testing) */
+        if (Env.get('DISCORD_BOT_TOKEN')) {
+            /* Login with the configured token */
+            await this.bot.login(Env.get('DISCORD_BOT_TOKEN'))
+        }
 
         /* Whenever the bot joins a guild */
         this.bot.on('guildCreate', async (guild: Guild) => {

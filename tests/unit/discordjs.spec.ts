@@ -1,11 +1,11 @@
 import { test } from '@japa/runner'
 import { Assert } from '@japa/assert'
-import { Client as DiscordJS } from 'discord.js'
-import Client from '@ioc:TicketBot/DiscordJS'
+import DiscordIoC from '@ioc:TicketBot/Discord'
+import Discord from 'services/Discord'
 
 test('Correctly binds discord.js Client to IoC', async ({ assert }: {
     assert: Assert
 }) => {
-    assert.instanceOf(Client, DiscordJS)
+    assert.instanceOf(DiscordIoC, Discord)
 })
   

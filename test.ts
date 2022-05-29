@@ -18,12 +18,19 @@ import 'reflect-metadata'
 import sourceMapSupport from 'source-map-support'
 import { Ignitor } from '@adonisjs/core/build/standalone'
 import { configure, processCliArgs, run, RunnerHooksHandler } from '@japa/runner'
+import { MockDiscordServer } from 'mock-discord-server'
 
 sourceMapSupport.install({ handleUncaughtExceptions: false })
 
 const kernel = new Ignitor(__dirname).kernel('test')
 
-kernel
+const discordServer: MockDiscordServer = new MockDiscordServer();
+
+(async () => {
+  await discordServer.start();
+
+  /* Boot and run tests */
+  await kernel
   .boot()
   .then(() => import('./tests/bootstrap'))
   .then(({ runnerHooks, ...config }) => {
@@ -43,3 +50,6 @@ kernel
 
     run()
   })
+
+  await discordServer.stop();
+})()

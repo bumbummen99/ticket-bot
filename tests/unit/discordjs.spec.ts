@@ -8,13 +8,7 @@ test.group('DiscordJS integration tests', group => {
     let server: MockDiscordServer
 
     group.setup(async () => {
-        server = new MockDiscordServer({
-            gatewayOptions: {
-              guilds: [mockGuild()],
-              user: mockUser(),
-              application: mockApplication(),
-            },
-        })
+        server = new MockDiscordServer()
 
         await server.start()
     })

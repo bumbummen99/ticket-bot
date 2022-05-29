@@ -18,8 +18,9 @@ export default class Discord {
         if (Env.get('DISCORD_API')) {
             options.http = {
                 api: Env.get('DISCORD_API'),
-                // @ts-ignore
-                rejectUnauthorized: false
+                agent: {
+                    rejectUnauthorized: false
+                }
             }
         }
 

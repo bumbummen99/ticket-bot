@@ -19,12 +19,23 @@ import sourceMapSupport from 'source-map-support'
 import { Ignitor } from '@adonisjs/core/build/standalone'
 import { configure, processCliArgs, run, RunnerHooksHandler } from '@japa/runner'
 import { MockDiscordServer } from 'mock-discord-server'
+import mockGuild from './tests/mockData/mockGuild'
+import mockUser from './tests/mockData/mockUser'
+import mockApplication from './tests/mockData/mockApplication'
 
 sourceMapSupport.install({ handleUncaughtExceptions: false })
 
 const kernel = new Ignitor(__dirname).kernel('test')
 
-const discordServer: MockDiscordServer = new MockDiscordServer();
+const discordServer: MockDiscordServer = new MockDiscordServer({
+  gatewayOptions: {
+    application: mockApplication,
+    user: mockUser,
+    guilds: [
+      mockGuild
+    ]
+  }
+});
 
 (async () => {
   try {

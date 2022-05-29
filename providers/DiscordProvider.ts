@@ -1,5 +1,5 @@
 import { ApplicationContract } from '@ioc:Adonis/Core/Application'
-import Discord from '../services/Discord'
+import Discord from 'App/Discord'
 
 export default class DiscordProvider {
   constructor(protected app: ApplicationContract) { }

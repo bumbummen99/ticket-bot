@@ -27,29 +27,31 @@ const kernel = new Ignitor(__dirname).kernel('test')
 const discordServer: MockDiscordServer = new MockDiscordServer();
 
 (async () => {
-  await discordServer.start();
+  try {
+    await discordServer.start();
 
-  /* Boot and run tests */
-  await kernel
-  .boot()
-  .then(() => import('./tests/bootstrap'))
-  .then(({ runnerHooks, ...config }) => {
-    const app: RunnerHooksHandler[] = [() => kernel.start()]
-
-    configure({
-      ...kernel.application.rcFile.tests,
-      ...processCliArgs(process.argv.slice(2)),
-      ...config,
-      ...{
-        importer: (filePath) => import(filePath),
-        setup: app.concat(runnerHooks.setup),
-        teardown: runnerHooks.teardown,
-      },
-      cwd: kernel.application.appRoot,
+    /* Boot and run tests */
+    await kernel
+    .boot()
+    .then(() => import('./tests/bootstrap'))
+    .then(({ runnerHooks, ...config }) => {
+      const app: RunnerHooksHandler[] = [() => kernel.start()]
+  
+      configure({
+        ...kernel.application.rcFile.tests,
+        ...processCliArgs(process.argv.slice(2)),
+        ...config,
+        ...{
+          importer: (filePath) => import(filePath),
+          setup: app.concat(runnerHooks.setup),
+          teardown: runnerHooks.teardown,
+        },
+        cwd: kernel.application.appRoot,
+      })
+  
+      run()
     })
-
-    run()
-  })
-
-  await discordServer.stop();
+  } finally {
+    await discordServer.stop();
+  }
 })()

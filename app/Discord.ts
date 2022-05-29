@@ -34,11 +34,8 @@ export default class Discord {
      */
     async boot(): Promise<void>
     {
-        /* Only login if the token is configured (i.e. not testing) */
-        if (Env.get('DISCORD_BOT_TOKEN')) {
-            /* Login with the configured token */
-            await this.bot.login(Env.get('DISCORD_BOT_TOKEN'))
-        }
+        /* Login with the configured token */
+        await this.bot.login(Env.get('DISCORD_BOT_TOKEN'))
 
         /* Whenever the bot joins a guild */
         this.bot.on('guildCreate', async (guild: Guild) => {

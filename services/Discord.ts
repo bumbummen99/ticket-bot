@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders'
-import { REST } from '@discordjs/builders'
+import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
 import Env from '@ioc:Adonis/Core/Env'
 import Logger from '@ioc:Adonis/Core/Logger'
@@ -17,7 +17,9 @@ export default class Discord {
         /* Overwrite API endpoint if set */
         if (Env.get('DISCORD_API')) {
             options.http = {
-                api: Env.get('DISCORD_API')
+                api: Env.get('DISCORD_API'),
+                // @ts-ignore
+                rejectUnauthorized: false
             }
         }
 

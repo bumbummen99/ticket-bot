@@ -83,7 +83,7 @@ export default class Discord {
         console.log(`Registering commands for ${guildId}!`)
 
         /* Publish the slash commands to the guild */
-        await rest.put(Routes.applicationGuildCommands(this.bot.user.id, guildId), { body: commands })
+        await rest.post(Routes.applicationGuildCommands(this.bot.user.id, guildId), { body: commands })
 
         Logger.info(`Successfully registered application commands to guild ${guildId}.`)
     }

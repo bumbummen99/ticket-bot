@@ -1,11 +1,12 @@
 import { test } from '@japa/runner'
 import { Assert } from '@japa/assert'
-import { Client as DiscordJS } from 'discord.js'
-import Client from '@ioc:TicketBot/DiscordJS'
+import DiscordIoC from '@ioc:TicketBot/Discord'
+import Discord from 'App/Discord'
 
-test('Correctly binds discord.js Client to IoC', async ({ assert }: {
-    assert: Assert
-}) => {
-    assert.instanceOf(Client, DiscordJS)
+test.group('DiscordJS integration tests', () => {
+    test('It initialized DiscordJS', async ({ assert }: {
+        assert: Assert
+    }) => {
+        assert.instanceOf(DiscordIoC, Discord)
+    })
 })
-  

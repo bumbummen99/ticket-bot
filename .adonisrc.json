@@ -18,7 +18,7 @@
     "./start/kernel"
   ],
   "providers": [
-    "./providers/DiscordBotProvider",
+    "./providers/DiscordProvider",
     "./providers/AppProvider",
     "@adonisjs/lucid",
     "@adonisjs/core",

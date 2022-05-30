@@ -16,6 +16,15 @@
         Congratulations, you have just created your first AdonisJS app.
       </p>
 
+      <p>
+        Join the bot with the following url:
+        @if(joinUrl)
+        <a href="{{ joinUrl }}" target="_BLANK">Join Bot</a>
+        @else
+        Bot not yet ready...
+        @end
+      </p>
+
       <ul>
         <li>
           The route for this page is defined inside <code>start/routes.ts</code> file

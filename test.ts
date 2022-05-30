@@ -18,28 +18,51 @@ import 'reflect-metadata'
 import sourceMapSupport from 'source-map-support'
 import { Ignitor } from '@adonisjs/core/build/standalone'
 import { configure, processCliArgs, run, RunnerHooksHandler } from '@japa/runner'
+import { MockDiscordServer } from 'mock-discord-server'
+import mockGuild from './tests/mockData/mockGuild'
+import mockUser from './tests/mockData/mockUser'
+import mockApplication from './tests/mockData/mockApplication'
 
 sourceMapSupport.install({ handleUncaughtExceptions: false })
 
 const kernel = new Ignitor(__dirname).kernel('test')
 
-kernel
-  .boot()
-  .then(() => import('./tests/bootstrap'))
-  .then(({ runnerHooks, ...config }) => {
-    const app: RunnerHooksHandler[] = [() => kernel.start()]
+const discordServer: MockDiscordServer = new MockDiscordServer({
+  gatewayOptions: {
+    application: mockApplication,
+    user: mockUser,
+    guilds: [
+      mockGuild
+    ]
+  }
+});
 
-    configure({
-      ...kernel.application.rcFile.tests,
-      ...processCliArgs(process.argv.slice(2)),
-      ...config,
-      ...{
-        importer: (filePath) => import(filePath),
-        setup: app.concat(runnerHooks.setup),
-        teardown: runnerHooks.teardown,
-      },
-      cwd: kernel.application.appRoot,
+(async () => {
+  try {
+    await discordServer.start();
+
+    /* Boot and run tests */
+    await kernel
+    .boot()
+    .then(() => import('./tests/bootstrap'))
+    .then(({ runnerHooks, ...config }) => {
+      const app: RunnerHooksHandler[] = [() => kernel.start()]
+  
+      configure({
+        ...kernel.application.rcFile.tests,
+        ...processCliArgs(process.argv.slice(2)),
+        ...config,
+        ...{
+          importer: (filePath) => import(filePath),
+          setup: app.concat(runnerHooks.setup),
+          teardown: runnerHooks.teardown,
+        },
+        cwd: kernel.application.appRoot,
+      })
+  
+      run()
     })
-
-    run()
-  })
+  } finally {
+    await discordServer.stop();
+  }
+})()

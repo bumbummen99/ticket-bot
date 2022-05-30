@@ -14,7 +14,7 @@ export default class Discord {
             intents: [Intents.FLAGS.GUILD_MEMBERS]
         }
 
-        /* Overwrite API endpoint if set */
+        /* Debug: Allow custom API and self signed certs */
         if (Env.get('DISCORD_API')) {
             options.http = {
                 api: Env.get('DISCORD_API'),
@@ -70,12 +70,18 @@ export default class Discord {
             version: '9'
         }
 
+        /* Debug: Allow custom API and self signed certs */
         if (Env.get('DISCORD_API')) {
             options.api = Env.get('DISCORD_API')
+            options.agent = {
+                rejectUnauthorized: false
+            }
         }
 
         const rest = new REST(options).setToken(Env.get('DISCORD_BOT_TOKEN'));
         
+        console.log(`Registering commands for ${guildId}!`)
+
         /* Publish the slash commands to the guild */
         await rest.put(Routes.applicationGuildCommands(this.bot.user.id, guildId), { body: commands })
 

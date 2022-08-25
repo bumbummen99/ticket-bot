@@ -41,7 +41,7 @@
     "@adonisjs/assembler": "^5.8.0",
     "@japa/preset-adonis": "^1.1.0",
     "@japa/runner": "^2.0.9",
-    "@symfony/webpack-encore": "^2.1.0",
+    "@symfony/webpack-encore": "^3.1.0",
     "adonis-preset-ts": "^2.1.0",
     "c8": "^7.11.3",
     "eslint": "^8.18.0",
